@@ -1,7 +1,9 @@
 'use strict';
 
 const store = (function() {
-  const addItem = function(bookmark) {
+  const addBookmark = function(bookmark) {
+    Object.assign(bookmark, expandedMode);
+    console.log(`Adding the following object: ${bookmark}`);
     this.bookmarks.push(bookmark);
   };
 
@@ -14,10 +16,31 @@ const store = (function() {
     Object.assign(item, newData);
   };
 
+  const toggleAddBookmark = function () {
+    this.addBookMarkToggled = !this.addBookmarkToggled;
+  };
+
+  const changeMinRating = function (newRating) {
+    this.minRating = newRating;
+  };
+
+  const addBookmarkToggled = false;
+
+  const expandedMode = {
+    expanded: false
+  };
+
+  const minRating = 0;
+  
   return {
     bookmarks: [],
-    addItem,
+    addBookmark,
     findById,
-    findAndUpdate
+    findAndUpdate,
+    addBookmarkToggled,
+    expandedMode,
+    minRating,
+    toggleAddBookmark,
+    changeMinRating
   };
 }());

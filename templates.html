@@ -15,18 +15,18 @@
 </form>
 
 <!--Condensed bookmark list item template-->
-<li class="js-bookmark-list-item" data-item-id="${item.id}">
-  <span class="bookmark-name">${item.name}</span>
-  <span class="bookmark-rating">${item.rating}</span>
+<li class="js-bookmark-list-item" data-bookmark-id="${bookmark.id}">
+  <span class="bookmark-name">${bookmark.title}</span>
+  <span class="bookmark-rating">${bookmark.rating} stars</span>
 </li>
 
 <!--Expanded bookmark list item template-->
-<li class="js-bookmark-list-item" data-item-id="${item.id}">
-  <span class="bookmark-name">${item.name}</span>
-  <span class="bookmark-rating">${item.rating}</span>
+<li class="js-bookmark-list-item" data-bookmark-id="${bookmark.id}">
+  <span class="bookmark-name">${bookmark.title}</span>
+  <span class="bookmark-rating">${bookmark.rating}</span>
   <textarea name="new-entry-des" class="new-entry-des" cols="40" rows="3" placeholder="Enter new description...">
-    ${item.desc}
+    ${bookmark.desc}
   </textarea>
-  <a href="${item.url}" class="button">Visit Page</a>
+  <a href="${bookmark.url}" class="button">Visit Page</a>
   <button class="expanded-view-button js-delete-button">Delete</button>
 </li>

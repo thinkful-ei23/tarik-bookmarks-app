@@ -1,5 +1,5 @@
 'use strict';
-/* global $*/
+/* global store, $ */
 
 const api = (function() {
   const BASE_URL = 'https://thinkful-list-api.herokuapp.com/tarik';
