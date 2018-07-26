@@ -52,24 +52,24 @@ const bookmarkList = (function() {
   function render() {
     console.log('render ran!');
     //Render bookmark add form to the DOM if toggled
-    if (store.toggleAddBookmark) {
+    if (store.addBookmarkToggled) {
       const html = generateAddBookmarkForm();
-      $('js-add-form').html(html);
+      $('.js-add-form').html(html);
+    } else {
+      $('.js-add-form').html('');
     }
     
     let bookmarks = store.bookmarks;
-    console.log(bookmarks);
     // Filter bookmark list based on minimum rating
     bookmarks = store.bookmarks.filter(bookmark => bookmark.rating > store.minRating);
 
     //Render bookmark list in the DOM
     const bookmarkListItemString = generateBookmarkItemsString(bookmarks);
-    console.log(bookmarkListItemString);
-    $('js-bookmark-list').html(bookmarkListItemString);
+    $('.js-bookmark-list').html(bookmarkListItemString);
   }
 
   function handleAddBookmarkClicked() {
-    $('js-add-bookmark').on('click', e => {
+    $('.js-add-bookmark').on('click', e => {
       console.log('handleAddBookmarkClicked ran!');
       //e.preventDefault();
       store.toggleAddBookmark();
@@ -78,7 +78,7 @@ const bookmarkList = (function() {
   }
 
   function handleSubmitNewBookmark() {
-    $('js-add-form').on('submit', '#js-add-bookmark-form', e => {
+    $('.js-add-form').on('submit', '#js-add-bookmark-form', e => {
       console.log('handleSubmitNewBookmark ran!');
       e.preventDefault();
       const newEntry = $(e.target).serializeJson();
@@ -92,9 +92,9 @@ const bookmarkList = (function() {
   }
 
   function handleChangeMinimumRating() {
-    $('js-set-min').on('change', e => {
+    $('.js-set-min').on('change', e => {
       console.log('handleChangeMinimumRating ran!');
-      const newMinVal = parseInt($('js-set-min').val());
+      const newMinVal = parseInt($('.js-set-min').val());
       console.log(newMinVal);
       store.changeMinRating(newMinVal);
       render();

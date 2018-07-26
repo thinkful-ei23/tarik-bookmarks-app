@@ -2,7 +2,7 @@
 
 const store = (function() {
   const addBookmark = function(bookmark) {
-    Object.assign(bookmark, expandedMode);
+    Object.assign(bookmark, this.expandedMode);
     console.log(`Adding the following object: ${bookmark}`);
     this.bookmarks.push(bookmark);
   };
@@ -17,29 +17,23 @@ const store = (function() {
   };
 
   const toggleAddBookmark = function () {
-    this.addBookMarkToggled = !this.addBookmarkToggled;
+    console.log(this.addBookmarkToggled);
+    this.addBookmarkToggled = !this.addBookmarkToggled;
+    console.log(this.addBookmarkToggled);
   };
 
   const changeMinRating = function (newRating) {
     this.minRating = newRating;
   };
-
-  const addBookmarkToggled = false;
-
-  const expandedMode = {
-    expanded: false
-  };
-
-  const minRating = 0;
   
   return {
     bookmarks: [],
     addBookmark,
     findById,
     findAndUpdate,
-    addBookmarkToggled,
-    expandedMode,
-    minRating,
+    addBookmarkToggled: false,
+    expandedMode: {expanded: false},
+    minRating: 0,
     toggleAddBookmark,
     changeMinRating
   };
