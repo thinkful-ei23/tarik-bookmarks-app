@@ -23,7 +23,7 @@ const api = (function() {
       url: `${BASE_URL}/bookmarks/${id}`,
       method: 'PATCH',
       contentType: 'application/json',
-      data: JSON.stringify(updateData),
+      data: updateData,
       success: callback
     };
     $.ajax(query);

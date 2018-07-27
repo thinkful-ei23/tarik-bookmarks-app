@@ -6,13 +6,15 @@ const bookmarkList = (function() {
   function generateBookmarkElement(bookmark) {
     if (bookmark.expanded) {
       return `
-      <li class="js-bookmark-list-item" data-bookmark-id="${bookmark.id}">
+      <li class="js-bookmark-list-item__expanded" data-bookmark-id="${bookmark.id}">
         <span class="bookmark-name">${bookmark.title}</span>
-        <span class="bookmark-rating">${bookmark.rating}</span>
-        <textarea name="new-entry-des" class="new-entry-des" cols="40" rows="3" placeholder="Enter new description...">
-          ${bookmark.desc}
-        </textarea>
+        <form id="update-bookmark-form">
+          <input type="text" name="rating" class="bookmark-rating" value="${bookmark.rating}">
+          <textarea name="desc" class="new-entry-des" cols="40" rows="3" placeholder="Enter new description...">${bookmark.desc}</textarea>
+          <button type="submit" class="expanded-view-button js-update-button">Update</button>
+        </form>
         <a href="${bookmark.url}" class="button">Visit Page</a>
+        <button class="expanded-view-button js-collapse-button">Collapse</button>
         <button class="expanded-view-button js-delete-button">Delete</button>
       </li>
       `;
@@ -95,10 +97,72 @@ const bookmarkList = (function() {
     });
   }
 
+  function getBookmarkIdFromElement(item) {
+    return $(item)
+      .closest('.js-bookmark-list-item')
+      .data('bookmark-id');
+  }
+
+  function getBookmarkIdFromExpandedElem(item) {
+    return $(item)
+      .closest('.js-bookmark-list-item__expanded')
+      .data('bookmark-id');
+  }
+
+  function handleExpandedBookmarkClick() {
+    $('.js-bookmark-list').on('click', '.js-bookmark-list-item', e => {
+      console.log('handleExpandedBookmarkClick ran!');
+      const id = getBookmarkIdFromElement(e.currentTarget);
+      const clickedBookmark = store.findById(id);
+      const newExpandedVal = {
+        expanded: !clickedBookmark.expanded
+      };
+      store.findAndUpdate(id, newExpandedVal);
+      render();
+    });
+  }
+
+  function handleCollapseClick() {
+    $('.js-bookmark-list').on('click', '.js-collapse-button', e => {
+      console.log('handleCollapseButton Ran!');
+      const id = getBookmarkIdFromExpandedElem(e.currentTarget);
+      const clickedBookmark = store.findById(id);
+      const newExpandedVal = {
+        expanded: !clickedBookmark.expanded
+      };
+      store.findAndUpdate(id, newExpandedVal);
+      render();
+    });
+  }
+
+  function handleUpdateBookmark() {
+    $('.js-bookmark-list').on('submit', '#update-bookmark-form', e => {
+      console.log('handleUpdateBookmark ran');
+      e.preventDefault();
+      const updateEntry = $(e.target).serializeJson();
+      const id = getBookmarkIdFromExpandedElem(e.currentTarget);
+      api.updateBookmark(id, updateEntry, function(){
+        console.log('Update successful');
+        api.getBookmarks(function(bookmarks) {
+          store.bookmarks = [];
+          bookmarks.forEach(function(bookmark) {
+            store.addBookmark(bookmark);
+          });
+          const updatedBookmark = store.findById(id);
+          updatedBookmark.expanded = !updatedBookmark.expanded;
+          render();
+        });
+      });
+    });
+  }
+
   function bindEventHandlers() {
     handleAddBookmarkClicked();
     handleSubmitNewBookmark();
     handleChangeMinimumRating();
+    handleExpandedBookmarkClick();
+    handleCollapseClick();
+    handleUpdateBookmark();
   }
   return {
     render: render,

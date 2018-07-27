@@ -2,9 +2,9 @@
 
 const store = (function() {
   const addBookmark = function(bookmark) {
-    Object.assign(bookmark, this.expandedMode);
-    console.log(`Adding the following Bookmark: ${bookmark.title}`);
-    this.bookmarks.push(bookmark);
+    const storeObj = Object.assign({},bookmark, this.expandedMode);
+    console.log(`Adding the following Bookmark: ${storeObj} status: expanded: ${storeObj.expandedMode}`);
+    this.bookmarks.push(storeObj);
   };
 
   const findById = function(id) {
