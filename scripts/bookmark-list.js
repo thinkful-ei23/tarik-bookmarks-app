@@ -82,7 +82,13 @@ const bookmarkList = (function() {
       api.createBookmarks(newEntry, function(newBookmark) {
         console.log(`New bookmark created: ${newBookmark}`);
         store.toggleAddBookmark();
-        render();
+        api.getBookmarks(function(bookmarks) {
+          store.bookmarks = [];
+          bookmarks.forEach(function(bookmark) {
+            store.addBookmark(bookmark);
+          });
+          render();
+        });
       });
     });
   }
@@ -156,6 +162,23 @@ const bookmarkList = (function() {
     });
   }
 
+  function handleDeleteBookmarkClick() {
+    $('.js-bookmark-list').on('click', '.js-delete-button', e => {
+      console.log('handleDeleteBookmarkClick ran!');
+      const id = getBookmarkIdFromExpandedElem(e.currentTarget);
+      api.deleteBookmark(id, function() {
+        console.log('Deletion successful');
+        api.getBookmarks(function(bookmarks) {
+          store.bookmarks = [];
+          bookmarks.forEach(function(bookmark) {
+            store.addBookmark(bookmark);
+          });
+          render();
+        });
+      });
+    });
+  }
+
   function bindEventHandlers() {
     handleAddBookmarkClicked();
     handleSubmitNewBookmark();
@@ -163,6 +186,7 @@ const bookmarkList = (function() {
     handleExpandedBookmarkClick();
     handleCollapseClick();
     handleUpdateBookmark();
+    handleDeleteBookmarkClick();
   }
   return {
     render: render,
