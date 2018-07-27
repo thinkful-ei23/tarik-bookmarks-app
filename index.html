@@ -7,17 +7,18 @@
   <title>Bookmark List</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css">
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <link rel="stylesheet" href="styles/float-grid.css">
   <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
-  <div role="container" class = "user-interface">
-    <header role="header">
+  <div class = "user-interface col-6">
+    <header role="banner">
       <h1>My Bookmarks</h1> 
     </header>
     <main role="main">
-      <div role="container" class= "add-filter-buttons">
+      <div class= "add-filter-buttons">
         <button class="js-add-bookmark">Add Bookmark</button>
-        <select class="js-set-min">
+        <select class="js-set-min" aria-label="choose a minimum bookmark rating">
           <option value="0">--Minimum Rating--</option>
           <option value="1">1 Star</option>
           <option value="2">2 Star</option>
@@ -25,9 +26,9 @@
           <option value="4">4 Star</option>
         </select>
       </div>
-      <div class="js-add-form">
+      <div class="add-form js-add-form">
       </div> 
-      <ul class="js-bookmark-list"></ul> 
+      <ul class="bookmark-list js-bookmark-list"></ul> 
     </main>
   </div>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/cuid/1.3.8/browser-cuid.min.js"></script>

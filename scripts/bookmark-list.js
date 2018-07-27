@@ -28,22 +28,23 @@ const bookmarkList = (function() {
           <p>Change your rating:</p>
           <div class="js-set-rating">
             <label for="1 star">1 Star</label>
-            <input type="radio" id="1 star" name="rating" value="1">
+            <input type="radio" name="rating" value="1" aria-label="1 stars">
             <label for="2 star">2 Stars</label>
-            <input type="radio" id="2 star" name="rating" value="2">
+            <input type="radio" name="rating" value="2" aria-label="2 stars">
             <label for="3 star">3 Stars</label>
-            <input type="radio" id="3 star" name="rating" value="3">
+            <input type="radio" name="rating" value="3" aria-label="3 stars">
             <label for="4 star">4 Stars</label>
-            <input type="radio" id="4 star" name="rating" value="4">
+            <input type="radio" name="rating" value="4" aria-label="4 stars">
             <label for="5 star">5 Stars</label>
-            <input type="radio" id="5 star" name="rating" value="5">
+            <input type="radio" name="rating" value="5" aria-label="5 stars">
           </div>
-          <textarea name="desc" class="new-entry-des" cols="40" rows="3" placeholder="Enter new description..." required>${bookmark.desc}</textarea>
-          <button type="submit" class="expanded-view-button js-update-button">Update</button>
+          <textarea name="desc" class="col-6 new-entry-des" cols="40" rows="3" placeholder="Enter new description..." aria-label="Update bookmark description" required>${bookmark.desc}</textarea>
+          <br>
+          <button type="submit" class="update-button" js-update-button">Update</button>
         </form>
         <a href="${bookmark.url}" class="button">Visit Page</a>
-        <button class="expanded-view-button js-collapse-button">Collapse</button>
-        <button class="expanded-view-button js-delete-button">Delete</button>
+        <button class="collapse-button js-collapse-button">Collapse</button>
+        <button class="delete-button js-delete-button">Delete</button>
       </li>
       `;
     }
@@ -62,23 +63,25 @@ const bookmarkList = (function() {
 
   function generateAddBookmarkForm () {
     return `
-    <form id="js-add-bookmark-form">
-      <input type="text" name="title" class="js-new-entry-title" placeholder="Enter bookmark name" required>
+    <form id="js-add-bookmark-form" class="add-bookmark-form">
+      <input type="text" name="title" class="js-new-entry-title" placeholder="Enter bookmark name" aria-label="enter a title" required>
       <p>Rate your bookmark:</p>
       <div class="js-set-rating">
         <label for="1 star">1 Star</label>
-        <input type="radio" id="1 star" name="rating" value="1">
+        <input type="radio" name="rating" value="1" aria-label="1 stars">
         <label for="2 star">2 Stars</label>
-        <input type="radio" id="2 star" name="rating" value="2">
+        <input type="radio" name="rating" value="2" aria-label="2 stars">
         <label for="3 star">3 Stars</label>
-        <input type="radio" id="3 star" name="rating" value="3">
+        <input type="radio" name="rating" value="3" aria-label="3 stars">
         <label for="4 star">4 Stars</label>
-        <input type="radio" id="4 stars" name="rating" value="4">
+        <input type="radio" name="rating" value="4" aria-label="4 stars">
         <label for="5 star">5 Stars</label>
-        <input type="radio" id="5 star" name="rating" value="5">
+        <input type="radio" name="rating" value="5" aria-label="5 stars">
       </div>
-      <input type="text" name="url" class="js-new-entry-url" placeholder="Enter bookmark url here (i.e. http://thinkful.com)" required>
-      <textarea name="desc" class="new-entry-des" cols="40" rows="3" placeholder="Enter a description..."></textarea>
+      <input type="text" name="url" class="new-entry-url js-new-entry-url" placeholder="Enter bookmark url here" aria-label="enter a url" required>
+      <br>
+      <textarea name="desc" class=" col-6 new-entry-des" cols="40" rows="3" placeholder="Enter a description..." aria-label="Enter a description"></textarea>
+      <br>
       <button type="submit">Submit</button>
       <div class="error-container"></div>
     </form>
