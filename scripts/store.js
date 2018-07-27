@@ -1,6 +1,9 @@
 'use strict';
 
 const store = (function() {
+  const setError = function(error) {
+    this.error = error;
+  };
   const addBookmark = function(bookmark) {
     const storeObj = Object.assign({},bookmark, this.expandedMode);
     console.log(`Adding the following Bookmark: ${storeObj} status: expanded: ${storeObj.expandedMode}`);
@@ -33,6 +36,8 @@ const store = (function() {
     expandedMode: {expanded: false},
     minRating: 0,
     toggleAddBookmark,
-    changeMinRating
+    changeMinRating,
+    setError,
+    error: null
   };
 }());

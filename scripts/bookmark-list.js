@@ -3,6 +3,21 @@
 
 const bookmarkList = (function() {
 
+  function generateError(err) {
+    let message = '';
+    if (err.responseJSON && err.responseJSON.message) {
+      message = err.responseJSON.message;
+    } else {
+      message = `${err.code} Server Error`;
+    }
+    return `
+      <section class="error-content">
+        <button id="cancel-error">X</button>
+        <p>${message}</p>
+      </section>
+    `;
+  }
+
   function generateBookmarkElement(bookmark) {
     if (bookmark.expanded) {
       return `
@@ -23,7 +38,7 @@ const bookmarkList = (function() {
             <label for="5 star">5 Stars</label>
             <input type="radio" id="5 star" name="rating" value="5">
           </div>
-          <textarea name="desc" class="new-entry-des" cols="40" rows="3" placeholder="Enter new description...">${bookmark.desc}</textarea>
+          <textarea name="desc" class="new-entry-des" cols="40" rows="3" placeholder="Enter new description..." required>${bookmark.desc}</textarea>
           <button type="submit" class="expanded-view-button js-update-button">Update</button>
         </form>
         <a href="${bookmark.url}" class="button">Visit Page</a>
@@ -48,7 +63,7 @@ const bookmarkList = (function() {
   function generateAddBookmarkForm () {
     return `
     <form id="js-add-bookmark-form">
-      <input type="text" name="title" class="js-new-entry-title" placeholder="Enter bookmark name">
+      <input type="text" name="title" class="js-new-entry-title" placeholder="Enter bookmark name" required>
       <p>Rate your bookmark:</p>
       <div class="js-set-rating">
         <label for="1 star">1 Star</label>
@@ -62,9 +77,10 @@ const bookmarkList = (function() {
         <label for="5 star">5 Stars</label>
         <input type="radio" id="5 star" name="rating" value="5">
       </div>
-      <input type="text" name="url" class="js-new-entry-url" placeholder="Enter bookmark url here (i.e. http://thinkful.com)">
+      <input type="text" name="url" class="js-new-entry-url" placeholder="Enter bookmark url here (i.e. http://thinkful.com)" required>
       <textarea name="desc" class="new-entry-des" cols="40" rows="3" placeholder="Enter a description..."></textarea>
       <button type="submit">Submit</button>
+      <div class="error-container"></div>
     </form>
     `;
   }
@@ -72,9 +88,16 @@ const bookmarkList = (function() {
   function render() {
     console.log('render ran!');
     //Render bookmark add form to the DOM if toggled
+
     if (store.addBookmarkToggled) {
       const html = generateAddBookmarkForm();
       $('.js-add-form').html(html);
+      if (store.error) {
+        const el = generateError(store.error);
+        $('.error-container').html(el);
+      } else {
+        $('.error-container').empty();
+      }
     } else {
       $('.js-add-form').html('');
     }
@@ -114,6 +137,10 @@ const bookmarkList = (function() {
           });
           render();
         });
+      }, function(error) {
+        console.log(error);
+        store.setError(error);
+        render();
       });
     });
   }
@@ -122,7 +149,6 @@ const bookmarkList = (function() {
     $('.js-set-min').on('change', e => {
       console.log('handleChangeMinimumRating ran!');
       const newMinVal = parseInt($('.js-set-min').val());
-      console.log(newMinVal);
       store.changeMinRating(newMinVal);
       render();
     });
@@ -204,6 +230,13 @@ const bookmarkList = (function() {
     });
   }
 
+  function handleCloseError() {
+    $('.js-add-form').on('click', '#cancel-error', e => {
+      store.setError(null);
+      render();
+    });
+  }
+
   function bindEventHandlers() {
     handleAddBookmarkClicked();
     handleSubmitNewBookmark();
@@ -212,6 +245,7 @@ const bookmarkList = (function() {
     handleCollapseClick();
     handleUpdateBookmark();
     handleDeleteBookmarkClick();
+    handleCloseError();
   }
   return {
     render: render,
