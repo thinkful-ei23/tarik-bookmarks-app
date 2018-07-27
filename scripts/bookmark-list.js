@@ -107,7 +107,13 @@ const bookmarkList = (function() {
     
     let bookmarks = store.bookmarks;
     // Filter bookmark list based on minimum rating
-    bookmarks = store.bookmarks.filter(bookmark => bookmark.rating > store.minRating);
+    bookmarks = store.bookmarks.filter(bookmark => {
+      if (!bookmark.rating) {
+        bookmark.rating = 0;
+        return bookmark;
+      }
+      return bookmark.rating > store.minRating;
+    });
 
     //Render bookmark list in the DOM
     const bookmarkListItemString = generateBookmarkItemsString(bookmarks);
@@ -138,6 +144,7 @@ const bookmarkList = (function() {
           bookmarks.forEach(function(bookmark) {
             store.addBookmark(bookmark);
           });
+          console.log(store.bookmarks);
           render();
         });
       }, function(error) {
