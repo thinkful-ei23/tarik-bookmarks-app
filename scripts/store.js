@@ -3,7 +3,7 @@
 const store = (function() {
   const addBookmark = function(bookmark) {
     Object.assign(bookmark, this.expandedMode);
-    console.log(`Adding the following object: ${bookmark}`);
+    console.log(`Adding the following Bookmark: ${bookmark.title}`);
     this.bookmarks.push(bookmark);
   };
 
@@ -17,9 +17,7 @@ const store = (function() {
   };
 
   const toggleAddBookmark = function () {
-    console.log(this.addBookmarkToggled);
     this.addBookmarkToggled = !this.addBookmarkToggled;
-    console.log(this.addBookmarkToggled);
   };
 
   const changeMinRating = function (newRating) {

@@ -33,17 +33,10 @@ const bookmarkList = (function() {
   function generateAddBookmarkForm () {
     return `
     <form id="js-add-bookmark-form">
-      <input type="text" name="new-entry-name" class="js-new-entry-name" placeholder="Enter bookmark name">  
-      <select class="js-set-rating">
-        <option value="1-star">1 Star</option>
-        <option value="2-star">2 Star</option>
-        <option value="3-star">3 Star</option>
-        <option value="4-star">4 Star</option>
-        <option value="4-star">5 Star</option>
-      </select>
-      <input type="text" name="new-entry-url" class="js-new-entry-url" placeholder="Enter bookmark url here (i.e. http://thinkful.com)">
-      <textarea name="new-entry-des" class="new-entry-des" cols="40" rows="3" placeholder="Enter a description...">
-      </textarea>
+      <input type="text" name="title" class="js-new-entry-title" placeholder="Enter bookmark name">
+      <input type="text" name="rating" class="js-set-rating" placeholder="Enter bookmark rating (1-5)">
+      <input type="text" name="url" class="js-new-entry-url" placeholder="Enter bookmark url here (i.e. http://thinkful.com)">
+      <textarea name="desc" class="new-entry-des" cols="40" rows="3" placeholder="Enter a description..."></textarea>
       <button type="submit">Submit</button>
     </form>
     `;
@@ -82,6 +75,7 @@ const bookmarkList = (function() {
       console.log('handleSubmitNewBookmark ran!');
       e.preventDefault();
       const newEntry = $(e.target).serializeJson();
+      $('#js-add-bookmark-form')[0].reset();
       console.log(`New bookmark item submitted: ${newEntry}`);
       api.createBookmarks(newEntry, function(newBookmark) {
         console.log(`New bookmark created: ${newBookmark}`);
