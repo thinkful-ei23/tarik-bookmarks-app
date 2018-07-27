@@ -8,8 +8,21 @@ const bookmarkList = (function() {
       return `
       <li class="js-bookmark-list-item__expanded" data-bookmark-id="${bookmark.id}">
         <span class="bookmark-name">${bookmark.title}</span>
+        <span class="current-rating">Bookmark rating: ${bookmark.rating}</span>
         <form id="update-bookmark-form">
-          <input type="text" name="rating" class="bookmark-rating" value="${bookmark.rating}">
+          <p>Change your rating:</p>
+          <div class="js-set-rating">
+            <label for="1 star">1 Star</label>
+            <input type="radio" id="1 star" name="rating" value="1">
+            <label for="2 star">2 Stars</label>
+            <input type="radio" id="2 star" name="rating" value="2">
+            <label for="3 star">3 Stars</label>
+            <input type="radio" id="3 star" name="rating" value="3">
+            <label for="4 star">4 Stars</label>
+            <input type="radio" id="4 star" name="rating" value="4">
+            <label for="5 star">5 Stars</label>
+            <input type="radio" id="5 star" name="rating" value="5">
+          </div>
           <textarea name="desc" class="new-entry-des" cols="40" rows="3" placeholder="Enter new description...">${bookmark.desc}</textarea>
           <button type="submit" class="expanded-view-button js-update-button">Update</button>
         </form>
@@ -36,7 +49,19 @@ const bookmarkList = (function() {
     return `
     <form id="js-add-bookmark-form">
       <input type="text" name="title" class="js-new-entry-title" placeholder="Enter bookmark name">
-      <input type="text" name="rating" class="js-set-rating" placeholder="Enter bookmark rating (1-5)">
+      <p>Rate your bookmark:</p>
+      <div class="js-set-rating">
+        <label for="1 star">1 Star</label>
+        <input type="radio" id="1 star" name="rating" value="1">
+        <label for="2 star">2 Stars</label>
+        <input type="radio" id="2 star" name="rating" value="2">
+        <label for="3 star">3 Stars</label>
+        <input type="radio" id="3 star" name="rating" value="3">
+        <label for="4 star">4 Stars</label>
+        <input type="radio" id="4 stars" name="rating" value="4">
+        <label for="5 star">5 Stars</label>
+        <input type="radio" id="5 star" name="rating" value="5">
+      </div>
       <input type="text" name="url" class="js-new-entry-url" placeholder="Enter bookmark url here (i.e. http://thinkful.com)">
       <textarea name="desc" class="new-entry-des" cols="40" rows="3" placeholder="Enter a description..."></textarea>
       <button type="submit">Submit</button>
